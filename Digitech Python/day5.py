@@ -1,62 +1,85 @@
 # 1.Form input checking -vadidates user input to ensure data is complete and correct
 # this program checks on the user inputand validity
 
-def form_input_checking():
+def validate_name(name):
+    if not name.strip():
+        return "Name cannot be empty."
+    elif not name.replace(" ", "").isalpha():
+        return "Name must contain only letters."
+    return None
+
+
+def validate_age(age):
+    try:
+        age = int(age)
+        if age <= 0:
+            return "Age must be a positive number."
+    except ValueError:
+        return "Age must be a number."
+    return None
+
+
+def validate_email(email):
+    import re
+    pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+    if not re.match(pattern, email):
+        return "Invalid email format."
+    return None
+
+
+def get_user_input():
+    print("=== User Registration Form ===")
+
     name = input("Enter your name: ")
     age = input("Enter your age: ")
     email = input("Enter your email: ")
 
-    if not name:
-        print("Error: Name is required.")
-        return
-    if not age.isdigit() or int(age) <= 0:
-        print("Error: Age must be a positive number.")
-        return
-    if "@" not in email or "." not in email:
-        print("Error: Invalid email format.")
-        return
+    # Validate all inputs
+    errors = []
 
-    print("Form submitted successfully!")
-    print(f"Name: {name}, Age: {age}, Email: {email}")
+    name_error = validate_name(name)
+    if name_error:
+        errors.append(name_error)
+
+    age_error = validate_age(age)
+    if age_error:
+        errors.append(age_error)
+
+    email_error = validate_email(email)
+    if email_error:
+        errors.append(email_error)
+
+    # Display results
+    if errors:
+        print("\n⚠️ Form submission failed! Please fix the following errors:")
+        for e in errors:
+            print("-", e)
+    else:
+        print("\n✅ Form submitted successfully!")
+        print(f"Name: {name}\nAge: {age}\nEmail: {email}")
+
+
+# Run the form
+if __name__ == "__main__":
+    get_user_input()    
 
  # 2.Menu sections -Responding to user choices in interactive programs
 
-def main_menu():
-    while True:
-        print("Main Menu:")
-        print("1. Option 1")
-        print("2. Option 2")
-        print("3. Option 3")
-        print("4. Exit")
-        
-        choice = input("Please select an option (1-4): ")
-        
-        if choice == '1':
-            option_1()
-        elif choice == '2':
-            option_2()
-        elif choice == '3':
-            option_3()
-        elif choice == '4':
-            print("Exiting the program.")
-            break
-        else:
-            print("Invalid choice. Please try again.")
+def menu_choice(choice):
+    if choice == '1':
+        print("You selected Option 1.")
+    elif choice == '2':
+        print("You selected Option 2.")
+    elif choice == '3':
+        print("You selected Option 3.")
+    else:
+        print("Invalid choice. Please select a valid option.")
 
-def option_1():
-    print("You selected Option 1.")
-
-def option_2():
-    print("You selected Option 2.")
-
-def option_3():
-    print("You selected Option 3.")
-
-if __name__ == "__main__":
-    main_menu()
+# Example usage
+user_input = input("Enter your choice (1-3): ")
+menu_choice(user_input)
 
 # 3.Access control - Determining user permissions and restricting features
-
 def access_control():
     users = {
         "admin": "admin123",
@@ -72,23 +95,28 @@ def access_control():
         if username == "admin":
             print("You have admin access.")
             # Admin-specific features
+            print("Accessing admin dashboard, managing users, viewing logs...")
         else:
             print("You have user access.")
             # User-specific features
+            print("Accessing user profile, viewing tasks, updating info...")
     else:
         print("Access denied. Invalid credentials.")
 
-#4.Error Handling- Decting and responding to problems in program execution.
-def error_handling():
-    try:
-        num1 = float(input("Enter a number: "))
-        num2 = float(input("Enter another number: "))
-        result = num1 / num2
-    except ValueError:
-        print("Error: Invalid input. Please enter numeric values.")
-    except ZeroDivisionError:
-        print("Error: Division by zero is not allowed.")
-    else:
-        print(f"The result of {num1} divided by {num2} is {result}.")
-    finally:
-        print("Execution completed.")
+
+# Run the function
+access_control()
+
+
+
+# 4.Error Handling- Decting and responding to problems in program execution.
+def set_age(age):
+    if age < 0:
+        raise ValueError("Age cannot be negative.")
+    print(f"Age set to {age}")
+
+# Example usage
+try:
+    set_age(-5)
+except ValueError as e:
+    print(f"Error: {e}")
