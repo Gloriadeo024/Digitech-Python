@@ -1,8 +1,8 @@
 # We are performing the FOR loop in our program
-# for number in range(5, 10):
-    # if number %2 == 0:
+for number in range(5, 10):
+    if number %2 == 0:
     # if number %2 == 1:
-        # print(number *"*")
+        print(number *"*")
 
 #  WE ARE PERFORMING THE WHILE LOOP IN OUR PROGRAM
 trial = 3
@@ -17,4 +17,3 @@ while attempts < trial:
         attempts += 1
 else:
     print("All attempts used. Access permanently denied.")
-        
