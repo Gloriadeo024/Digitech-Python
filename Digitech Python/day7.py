@@ -25,3 +25,11 @@ b = 8
 cal = a ^ b
 binary = bin(cal)
 print(f"{cal} and it's binary is {binary}")   
+
+#4. Bitwise NOT (~)
+a = 5
+print(~a) 
+
+#5. Bitwise Left and right Shift 
+print(a >>2)
+print(a <<2)
